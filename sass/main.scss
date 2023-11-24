@@ -1,0 +1,591 @@
+// 1-Import Mixin File:
+@import "../sass/helpers/mixin";
+
+/*2-Start Global Variables:*/
+$main-color: #153466;
+$alt-color: #1a6586;
+$alt-color2: #fff5f5;
+$padd: 60px;
+$main-duration: 0.3s;
+/* End Global Variables:*/
+
+/*3- Start Components:*/
+.special-heading {
+  color: $main-color;
+  font-weight: bold;
+  font-size: 100px;
+  letter-spacing: -3px;
+  margin: 0;
+  text-align: center;
+}
+
+/*Paragraph after this heading*/
+.special-heading + p {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: -3px;
+  color: $alt-color;
+}
+/*Media Query in mobile*/
+@include breakPoints(mobile) {
+  .special-heading {
+    font-size: 35px;
+  }
+  .special-heading + p {
+    font-size: 10px;
+    margin-top: 0;
+  }
+}
+/*End Components*/
+
+/*4-Start Global rules:*/
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Work Sans", sans-serif;
+}
+
+.container {
+  margin: {
+    left: auto;
+    right: auto;
+  }
+  padding: {
+    left: 15px;
+    right: 15px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+/*End Global rules:*/
+
+/*5-Start Header: In a Container*/
+.header {
+  padding: {
+    left: $padd;
+    right: $padd;
+    bottom: 20px;
+    top: 20px;
+  }
+  background: rgb(21, 52, 102);
+  background: radial-gradient(
+    circle,
+    rgba(21, 52, 102, 1) 0%,
+    rgba(35, 162, 166, 1) 50%,
+    rgba(26, 101, 134, 1) 100%
+  );
+
+  .container {
+    /*This is for Menu Bar*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    color: $alt-color2;
+  }
+  .links {
+    position: relative;
+    &:hover .icon span:nth-child(2) {
+      width: 100%;
+    }
+
+    &:hover ul {
+      display: block; //when i make hover on links the ul will appear
+    }
+
+    /*Make icon manually*/
+    .icon {
+      width: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      span {
+        background-color: $alt-color2;
+        margin-bottom: 5px;
+        height: 3px;
+        &:first-child {
+          width: 100%;
+        }
+        &:nth-child(2) {
+          width: 50%;
+          transition: $main-duration;
+        }
+        &:last-child {
+          width: 100%;
+        }
+      }
+    }
+    /*Body of links*/
+    ul {
+      list-style-type: none;
+      border-radius: 10px;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: calc(100% + 15px); //give it more space to make arrow
+      right: 0; //prevent it from getting outside the page
+      background: $alt-color2;
+      min-width: 300px;
+      text-align: center;
+      display: none; //when we finish it
+      z-index: 1;
+      /*Links inside UL itself*/
+      a {
+        font: {
+          size: 20px;
+          weight: bold;
+        }
+        display: block;
+        padding: 15px;
+        text-decoration: none;
+        transition: $main-duration;
+        color: $main-color;
+        &:hover {
+          padding-left: 25px;
+        }
+      }
+      /*This if for the arrow before the UL*/
+      &::before {
+        content: "";
+        border: {
+          width: 10px;
+          style: solid;
+          color: transparent transparent $alt-color2 transparent;
+        }
+        position: absolute;
+        //width of logo is 30px, border of span suppose to be 20 'actual value 19.2 ' so there is 5px from left and right
+        top: -17.5px;
+        right: 5px;
+      }
+      li:not(:last-child) a {
+        /*make border bottom for all elements except last child*/
+        border-bottom: 1px solid $alt-color;
+      }
+    }
+  }
+}
+/*EndHeader:*/
+
+/*6-Start Landing Page: This is Full Screen*/
+.landing {
+  @include breakPoints(mobile, small, medium) {
+    background-image: none; /* Remove the background image */
+  }
+
+  position: relative;
+  height: calc(100vh - 70px);
+  background: {
+    image: url(../images/3d-render-code-testing-functional-test-usability.jpg);
+    size: contain;
+    repeat: no-repeat;
+    position: right;
+  }
+  .intro-text {
+    /*small bio*/
+    .bio {
+      font-weight: bold;
+      font-size: 15px;
+      margin-top: -25px;
+    }
+
+    @include breakPoints(mobile, small, medium, large) {
+      h1 {
+        color: $main-color;
+        font-weight: bold;
+      }
+      p {
+        color: $alt-color;
+      }
+
+      .icons {
+        color: $main-color;
+      }
+    }
+    @include breakPoints(mobile, small, medium) {
+      text-align: center;
+      margin: {
+        left: 30px;
+        right: 30px;
+      }
+    }
+    @include breakPoints(mobile) {
+      position: absolute;
+      top: 15%;
+      h1 {
+        margin-bottom: 20px;
+        font-size: 25px;
+      }
+      .bio {
+        font-size: 10px;
+      }
+      p {
+        line-height: 1.8;
+        font-size: 14px;
+      }
+    }
+
+    @include breakPoints(small) {
+      position: absolute;
+      top: 15%;
+      h1 {
+        font-size: 35px;
+        margin-bottom: 30px;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.8;
+      }
+      .bio {
+        font-size: 10px;
+      }
+      .icons {
+        font-size: 20px;
+        margin-top: 30px;
+      }
+    }
+
+    @include breakPoints(medium) {
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      h1 {
+        font-size: 40px;
+        margin-bottom: 25px;
+      }
+      p {
+        line-height: 1.8;
+        font-size: 18px;
+      }
+      .icons {
+        font-size: 25px;
+        margin-top: 25px;
+      }
+    }
+
+    @include breakPoints(large) {
+      position: absolute;
+      top: 75%;
+      transform: translate(10%, -80%);
+      max-width: 750px;
+      h1 {
+        font-size: 40px;
+      }
+      p {
+        font-size: 17px;
+        line-height: 2;
+      }
+      .icons {
+        margin-top: 30px;
+        font-size: 25px;
+        width: 250px;
+        display: flex;
+        justify-content: space-between;
+        color: $main-color;
+      }
+    }
+  }
+}
+/*EndLanding Page*/
+
+/*7-Start Features:*/
+.features {
+  padding: $padd;
+  @include breakPoints(mobile) {
+    padding: $padd 0;
+  }
+  background-color: $alt-color2;
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-gap: 20px;
+    .feat {
+      padding: 20px;
+      text-align: center;
+      i {
+        color: $main-color;
+        font-size: 45px;
+      }
+      h3 {
+        color: $main-color;
+        font-weight: 800;
+        margin: 30px 0;
+        font-size: 25px;
+      }
+      p {
+        color: $alt-color;
+        line-height: 1.8;
+        font-size: 17px;
+      }
+    }
+  }
+}
+/* End Features:*/
+
+/*8- Start Coding Skills*/
+.coding {
+  padding: $padd;
+  @include breakPoints(mobile) {
+    padding: 0;
+  }
+  .coding-content {
+    margin-top: $padd;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-gap: 20px;
+
+    .skill {
+      display: flex;
+      margin-bottom: 50px;
+      @include breakPoints(mobile) {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      i {
+        font-size: 30px;
+        flex-basis: 60px; //better than width cause this is responsive in width and height
+        color: $main-color;
+      }
+
+      .text {
+        //flex-grow : 1;    ➜ The div will grow in same proportion as the window-size
+        //flex-shrink : 1;  ➜ The div will shrink in same proportion as the window-size
+        //flex-basis : 0;   ➜ The div does not have a starting value as such and will
+        //take up screen as per the screen size available for
+        //e.g:- if 3 divs are in the wrapper then each div will take 33%.
+        flex: 1;
+
+        h3 {
+          margin: 0 0 20px;
+          color: $main-color;
+        }
+
+        p {
+          color: $alt-color;
+          font-weight: 300;
+          line-height: 1.8;
+        }
+      }
+    }
+
+    .image {
+      text-align: center;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: 60px;
+        width: 100px;
+        height: calc(100% + 100px);
+        background-color: #5893ac;
+        z-index: -1;
+      }
+
+      /*Less than these pixels remove image*/
+      @media (max-width: 1279px) {
+        display: none;
+      }
+
+      img {
+        width: 260px;
+      }
+    }
+  }
+}
+/*End Coding Skills*/
+
+/*9- Start Soft Skills*/
+.soft-skills {
+  padding: $padd;
+  @include breakPoints(mobile) {
+    padding: 0;
+  }
+  background-color: $alt-color2;
+  .soft-skills-content {
+    margin-top: $padd;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-gap: 20px;
+
+    .card {
+      background-color: rgb(255, 255, 255);
+      img {
+        max-width: 100%;
+      }
+
+      .info {
+        padding: 20px $padd;
+        h3 {
+          color: $main-color;
+          margin: 0;
+        }
+
+        p {
+          color: $alt-color;
+          line-height: 1.8;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+/*End Soft Skills*/
+
+/*10- Start About*/
+.about {
+  padding: $padd;
+  @include breakPoints(mobile) {
+    padding: 0;
+  }
+  .about-content {
+    @include breakPoints(mobile, small) {
+      flex-direction: column;
+      text-align: center;
+    }
+    margin-top: $padd;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .image {
+      @include breakPoints(mobile, small) {
+        margin: 0 auto 100px; // margin 0 from top, auto from left and right 60 from bottom
+      }
+      position: relative;
+      width: 250px;
+      height: 375px;
+      img {
+        max-width: 100%;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: calc(100% + 150px);
+        background-color: $main-color;
+        top: -40px;
+        left: -35px;
+        z-index: -1;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        border-left: 80px solid #5893ac;
+        border-bottom: 80px solid #5893ac;
+        width: 100px;
+        height: 320px;
+        top: -40px;
+        right: -130px;
+        z-index: -1;
+      }
+
+      &::before,
+      &::after {
+        @include breakPoints(mobile, small) {
+          display: none;
+        }
+      }
+    }
+
+    .text {
+      flex-basis: calc(100% - 500px);
+      p:first-of-type,
+      p:last-of-type {
+        line-height: 2;
+      }
+      p:first-of-type {
+        font-weight: bold;
+        margin-bottom: 50px;
+        color: $main-color;
+      }
+      p:last-of-type {
+        color: $alt-color;
+      }
+      hr {
+        width: 50%;
+        display: inline-block;
+        border-color: #5893ac;
+      }
+    }
+  }
+}
+/*End About*/
+
+/*11- Start Contact*/
+.contact {
+  margin-top: 100px;
+  padding: $padd;
+  @include breakPoints(mobile) {
+    padding: 0;
+  }
+
+  .info {
+    padding-top: $padd;
+    padding-bottom: $padd;
+    text-align: center;
+
+    .label {
+      @include breakPoints(mobile) {
+        font-size: 20px;
+      }
+      font-size: 35px;
+      font-weight: 800;
+      color: $alt-color;
+      letter-spacing: -1px;
+      margin-bottom: 35px;
+    }
+
+    a {
+      @include breakPoints(mobile) {
+        font-size: 20px;
+      }
+      display: block;
+      font-size: 35px;
+      font-weight: 800;
+      color: $main-color;
+      text-decoration: none;
+    }
+
+    .social {
+      @include breakPoints(mobile) {
+        font-size: 12px;
+      }
+      display: flex;
+      justify-content: center;
+      margin-top: 35px;
+      font-size: 18px;
+      color: $alt-color;
+      i {
+        margin-left: 10px;
+        color: $main-color;
+      }
+    }
+  }
+}
+/*End Contact*/
+
+/*12- Start Footer*/
+.footer {
+  background-color: $alt-color;
+  color: $alt-color2;
+  padding: 30px $padd;
+  text-align: center;
+  font-size: 20px;
+  @include breakPoints(mobile) {
+    font-size: 15px;
+  }
+  span {
+    font-weight: bold;
+    color: #4de1cb;
+  }
+}
+/*End Footer*/
